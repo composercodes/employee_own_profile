@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<odoo>
+    
+    <menuitem
+       id="menu_hr_sys"
+       name='HR'
+       sequence="3"
+       groups="base.group_user"
+       web_icon="mtg_hr_extensions,static/img/website_hr.png" />
+ 
+    <menuitem
+       id="menu_hr_confg"
+       name="HR Configuration"
+       sequence="2"
+       parent="menu_hr_sys"
+       groups="base.group_user"  />
+    
+     <menuitem
+       id="menu_hr_sys_confg"
+       action="action_hr_confg"
+       name="General Configuration"
+       sequence="1"
+       parent="menu_hr_confg"
+       groups="base.group_user"  />
+     
+    <!--<menuitem-->
+    <!--   id="menu_hr_holidays_allocation"-->
+    <!--   name="Holidays Allocation Configuration"-->
+    <!--   parent="menu_hr_confg"-->
+    <!--   sequence="2"-->
+    <!--   groups="hr.group_hr_manager"-->
+    <!--   action="action_hr_holidays_allocation"/>         -->
+</odoo>
+    

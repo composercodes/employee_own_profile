@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<odoo>
+   <!--## Dynamic Holidays Allocation ##--> 
+    <record id="view_holiday_status_extention_tree" model="ir.ui.view">
+            <field name="name">Holidays Allocation</field>
+            <field name="model">hr.holidays.allocation</field>
+            <field name="arch" type="xml">
+                <tree >
+                       <field name="experience_from"/>
+                       <field name="experience_to"/>
+                       <field name="leaves_count"/>
+                       <field name="year" string="Year"/>
+                       <field name="leave_id" string="Parent Leave "/>
+                       <field name="company_id" />
+                </tree>
+            </field>
+     </record>
+
+    <record id="view_hr_holidays_status_extention_search" model="ir.ui.view">
+       <field name="name">hr.holidays.status.extention.search</field>
+       <field name="model">hr.holidays.allocation</field>
+       <field name="arch" type="xml">
+           <search string="Leave Type">
+                <filter name="group_year" string="year" icon="terp-partner" context="{'group_by':'year'}"/>
+           </search>
+       </field>
+   </record>
+
+      <record id="edit_holiday_status_extention_form" model="ir.ui.view">
+       <field name="name">Holidays Allocation</field>
+       <field name="model">hr.holidays.allocation</field>
+       <field name="arch" type="xml">
+       <form string="Leave Type">
+           <sheet>
+               <group>
+                 <field name="company_id" />
+                 <field name="leave_id"  string="Parent Leave"/>
+                 <field name="experience_from" string="From "/>
+                 <field name="experience_to" string="To "/>
+                 <field name="leaves_count" string="Leaves Count "/>
+                 <field name="year" string="Year"/>
+               </group>
+           </sheet>
+       </form>
+       </field>
+   </record>
+
+    <record id="action_hr_holidays_allocation" model="ir.actions.act_window">
+       <field name="name">Holidays Allocation</field>
+       <field name="type">ir.actions.act_window</field>
+       <field name="res_model">hr.holidays.allocation</field>
+       <field name="view_type">form</field>
+       <field name="view_mode">tree,form</field>
+       <field name="view_id" eval="view_holiday_status_extention_tree"/>
+       <field name="search_view_id" ref="view_hr_holidays_status_extention_search"/>
+       <field name="context">{'search_default_group_year': 1}</field>
+   </record>     
+    <menuitem
+       id="menu_hr_holidays_allocation"
+       name="Dynamic Holidays Allocation"
+       parent="hr_holidays.menu_hr_holidays_configuration"
+       sequence="100"
+       groups="hr.group_hr_manager"
+       action="action_hr_holidays_allocation"/>    
+
+    
+      <!--  Global Leaves  -->
+      <record id="global_leaves_form" model="ir.ui.view">
+         <field name="name">Global Leaves</field>
+         <field name="model">hr.global.leaves</field>
+         <field name="arch" type="xml">
+            <form string="Global Leaves">
+               <sheet> 
+                    <group col="4">
+                       <field name="name" />
+                       <field name="year" />
+                    </group>
+                    <group col="4">
+                       <field name="date_from" autocomplete="off" />
+                       <field name="date_to" autocomplete="off" />
+                    </group>
+                </sheet>    
+            </form>
+         </field>
+      </record>
+      <record id="global_leaves_tree" model="ir.ui.view">
+         <field name="name">Global Leaves</field>
+         <field name="model">hr.global.leaves</field>
+         <field name="arch" type="xml">
+            <tree string="Global Leaves">
+               <field name="name" />
+               <field name="date_from" />
+               <field name="date_to" />
+               <field name="year" />
+            </tree>
+         </field>
+      </record>
+      <record id="global_leaves_action" model="ir.actions.act_window">
+         <field name="name">Global Leaves</field>
+         <field name="res_model">hr.global.leaves</field>
+         <field name="view_type">form</field>
+         <field name="view_mode">tree,form</field>
+         <field name="view_id" ref="global_leaves_tree" />
+      </record>
+      <menuitem id="global_leaves_menu" name="Global Leaves" action="global_leaves_action"
+                parent="hr_holidays.menu_hr_holidays_configuration"
+                groups="hr.group_hr_manager" sequence="200" />
+      <!--  End Global Leaves  -->
+      
+	<menuitem id="working_horus_conf" name="Working Time Configuration" parent="hr_holidays.menu_hr_holidays_root" sequence="3000" groups="hr.group_hr_manager"/>
+    <menuitem id="working_horus_id" name="Working Times" action="resource.action_resource_calendar_form" parent="working_horus_conf"  sequence="2"/>
+        
+        
+    <!--## Form ##-->
+    <record id="mtg_hr_leave_type_view_form" model="ir.ui.view">
+        <field name="name">hr.leave.type.form</field>
+        <field name="model">hr.leave.type</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='validation_type']" position="after">
+                <field name="company_id"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <!--## Tree ##-->
+    <record id="mtg_hr_leave_type_view_tree" model="ir.ui.view">
+        <field name="name">hr.leave.type.tree</field>
+        <field name="model">hr.leave.type</field>
+        <field name="inherit_id" ref="hr_holidays.view_holiday_status_normal_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='validation_type']" position="after">
+                <field name="company_id"/>
+            </xpath>
+        </field>
+    </record>    
+</odoo>

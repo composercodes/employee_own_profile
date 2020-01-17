@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+hr_expense.access_hr_expense_employee,employee expenses,hr_expense.model_hr_expense,base.group_user,0,0,0,0
+hr_expense.access_hr_expense_sheet_employee,Employee Expenses Sheet,hr_expense.model_hr_expense_sheet,base.group_user,0,0,0,0
+hr_holidays_allocation.access_hr_holidays_allocation,Holidays Allocation,model_hr_holidays_allocation,hr.group_hr_manager,1,1,1,1
+hr_global_leaves.access_hr_global_leaves,Global Leaves,model_hr_global_leaves,hr.group_hr_manager,1,1,1,1

@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <act_window
+            id="action_open_leaves"
+            name="Leave Types"
+            res_model="hr.leave.type"
+            view_type="form"
+            view_mode="tree,kanban,form"
+            domain="[('company_id', '=', active_id)]"/>
+
+    <act_window
+            id="action_open_working_times"
+            name="Working Times"
+            res_model="resource.calendar"
+            view_type="form"
+            view_mode="tree,kanban,form"
+            target="current"
+            domain="[('company_id', '=', active_id)]"/>
+    
+    <act_window
+            id="action_open_leaves_allocation"
+            name="Leaves Allocation Confg"
+            res_model="hr.holidays.allocation"
+            view_type="form"
+            view_mode="tree,form"
+            target="current"
+            context="{'search_default_group_year': 1}"
+            domain="[('company_id', '=', active_id)]"/>    
+
+
+    <record id="view_hr_config_form" model="ir.ui.view">
+        <field name="name">HR Configuration</field>
+        <field name="model">res.company</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_open_leaves_allocation)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-calendar-check-o">
+                            <field name="allocation_count" widget="statinfo" string="Leaves Allocation Confg"/>
+                        </button>                           
+                        <button name="%(action_open_leaves)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-calendar">
+                            <field name="Leaves_count" widget="statinfo" string="Leave Types"/>
+                        </button>
+                        <button name="%(action_open_working_times)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-clock">
+                            <field name="resource_calendar_count" widget="statinfo" string="Working Times"/>
+                        </button>
+                       
+                    </div>
+                        <group>
+                            <field name="name"/>
+                        </group>
+    
+                </sheet>
+            </form>
+        </field>
+    </record>
+	
+
+
+    <record id="view_hr_config_tree" model="ir.ui.view">
+        <field name="name">HR Configuration</field>
+        <field name="model">res.company</field>
+        <field name="arch" type="xml">
+            <tree string="HR Configuration">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+        <record id="action_hr_confg" model="ir.actions.act_window">
+            <field name="name">HR Configuration</field>
+            <field name="res_model">res.company</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field eval="False" name="view_id"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to Create a New Record.
+                </p>
+            </field>
+        </record>
+	<record id="action_hr_config_tree_view1" model="ir.actions.act_window.view">
+		<field eval="1" name="sequence"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_hr_config_tree"/>
+		<field name="act_window_id" ref="action_hr_confg"/>
+	</record>
+	
+	<record id="action_hr_config_tree_view2" model="ir.actions.act_window.view">
+		<field eval="2" name="sequence"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_hr_config_form"/>
+		<field name="act_window_id" ref="action_hr_confg"/>
+	</record>	
+    <!--## Form ##-->
+    <record id="prt_res_company_view_form" model="ir.ui.view">
+        <field name="name">prt.res.company.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="support_outgoining_mail"/>
+                <field name="outgoining_mail" attrs="{'invisible':[('support_outgoining_mail','=',False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
